@@ -1,4 +1,17 @@
-# do ..3 instead of cd ../../../
+#Smart cd
+
+cd () {
+  if [[ -f ${1} ]]
+  then
+    [[ ! -e ${1:h} ]] && return 1
+    print "Correcting ${1} to ${1:h}"
+    builtin cd ${1:h}
+  else
+    builtin cd ${1}
+  fi
+}
+
+# do .. 3 instead of cd ../../../
 
 ..() {
   local dir
@@ -19,3 +32,17 @@ function chpwd() {
   exa -Ga --icons --group-directories-first
 }
 
+# Use lf to switch directories and bind it to ctrl-o
+
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp" >/dev/null
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+
+bindkey -s '^o' 'lfcd\n' # cd with lf (ctrl + o) 
+bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'  # cd with fzf (ctrl+f)

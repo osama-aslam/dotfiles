@@ -1,6 +1,6 @@
 export LF_ICONS="\
 fi=:\
-di=:\
+di=:\
 ln=:\
 pi=|:\
 so=ﯲ:\

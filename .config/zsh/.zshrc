@@ -1,35 +1,27 @@
-# Enable Powerlevel10k instant prompt.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
-setopt autocd interactive_comments extended_history hist_expire_dups_first
+setopt autocd extended_history share_history hist_expire_dups_first
 zle_highlight=('paste:none') # Disable paste highlight
 
-#History
-HISTSIZE=10000000
-SAVEHIST=10000000
-HISTFILE=~/.cache/zsh/history
+[ -f "$ZDOTDIR/plugins/zsh-defer/zsh-defer.plugin.zsh" ] && source "$ZDOTDIR/plugins/zsh-defer/zsh-defer.plugin.zsh"
+[ -f "$ZDOTDIR/files/functions.zsh" ] && source "$ZDOTDIR/files/functions.zsh"
 
-# source functions
-source $ZDOTDIR/files/functions.zsh
+files=(
+  prompt                    # prompt
+  hist                      # history
+  completions               # tab completions
+  aliasrc                   # aliases
+  cd-functions              # functions for "cd"
+  vi-mode                   # vi-mode etc.
+  iconsrc                   # icons for lf
+  # command-not-found         # insulter
+)
 
-add_file "aliasrc.zsh"                              # aliases
-add_file "iconsrc.zsh"                              # icons for lf file manager
-add_file "vi-mode.zsh"                              # vi-mode and ctrl-e for editing command in vim
-add_file "completions.zsh"                          # completions for zsh
-add_file "cd-functions.zsh"                         # auto ls on every cd and lets you do ..3 instead of ../../..  
-add_file "lfcd.zsh"                                 # cd using lf with ctrl-o
-add_file ".p10k.zsh"                                # p10k prompt config
-add_file "powerlevel10k/powerlevel10k.zsh-theme"    # p10k theme
-add_file "command-not-found.bash"                   # bash and zsh insulter
-add_file "vim-tab-completion.zsh"                   # vim keys in tab-completions
+plugins=(
+  zsh-users/zsh-autosuggestions                 # autosuggestions
+  zdharma-continuum/history-search-multi-word   # history (Ctrl+R)
+  agkozak/zsh-z                                 # autojump 
+  zdharma-continuum/fast-syntax-highlighting    # syntax-highlighting
+)
 
-add_plugin "hlissner/zsh-autopair"                        # autopair 
-add_plugin "zsh-users/zsh-autosuggestions"                # autosuggestions
-add_plugin "zdharma-continuum/fast-syntax-highlighting"   # syntax highlighting
-
-bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
-bindkey '^[[P' delete-char
-
-eval "$(zoxide init zsh)"
+file-load $files
+plugin-load $plugins
