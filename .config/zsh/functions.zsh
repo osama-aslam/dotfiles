@@ -1,11 +1,11 @@
 # Function to source files if they exist
-fpath+=$HOME/.config/zsh/files/
+fpath+=$HOME/.config/zsh/
 
 function file-load() {
 local file
 for file in $@
 do
- [ -f "$ZDOTDIR/files/$file.zsh" ] && zsh-defer source "$ZDOTDIR/files/$file.zsh"
+ [ -f "$ZDOTDIR/$file.zsh" ] && source "$ZDOTDIR/$file.zsh"
 done
 }
 

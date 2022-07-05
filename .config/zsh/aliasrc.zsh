@@ -17,3 +17,4 @@ alias \
   i3rc="vim ~/.config/i3/config" \
   aliasrc="vim ~/.config/zsh/files/aliasrc.zsh" \
   zshrc="vim ~/.config/zsh/.zshrc" \
+  cleanup="sudo pacman -Rns $(pacman -Qtdq)"
