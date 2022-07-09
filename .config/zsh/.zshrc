@@ -14,7 +14,6 @@ files=(
   completions               # tab completions
   aliasrc                   # aliases
   cd-functions              # functions for "cd"
-  iconsrc                   # icons for lf
   # command-not-found         # insulter
   # vi-mode                   # vi-mode etc.
 )

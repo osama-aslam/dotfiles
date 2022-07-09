@@ -15,6 +15,6 @@ alias \
   cat="bat" \
   catp="bat -pp" \
   i3rc="vim ~/.config/i3/config" \
-  aliasrc="vim ~/.config/zsh/files/aliasrc.zsh" \
+  aliasrc="vim ~/.config/zsh/aliasrc.zsh" \
   zshrc="vim ~/.config/zsh/.zshrc" \
   cleanup="sudo pacman -Rns $(pacman -Qtdq)"
