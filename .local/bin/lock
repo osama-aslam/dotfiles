@@ -1,0 +1,32 @@
+#!/bin/bash
+
+fg=#c0caf5
+wrong=#db4b4b
+highlight=#565f89
+date=#7aa2f7
+verify=#9ece6a
+
+# change this to set desired picure background
+picture=$HOME/Pictures/walls/od77.jpg
+
+slowfade () {
+    dis=$(echo -n "$DISPLAY" | tr -c '[:alnum:]' _)
+    ifc='com.github.chjj.compton'
+    obj='/com/github/chjj/compton'
+    if [[ "$1" == "start" ]]; then
+        dbus-send --dest=$ifc.$dis \
+            $obj $ifc.opts_set string:fade_in_step double:0.02
+        dbus-send --dest=$ifc.$dis \
+            $obj $ifc.opts_set string:fade_out_step double:0.02
+    else
+        dbus-send --dest=$ifc.$dis \
+            $obj $ifc.opts_set string:fade_in_step double:0.1
+        dbus-send --dest=$ifc.$dis \
+            $obj $ifc.opts_set string:fade_out_step double:0.1
+    fi
+}
+
+pkill -u "$USER" -USR1 dunst
+slowfade start
+i3lock -n --force-clock -i $picture -F -e --indicator --radius=15 --ring-width=30 --inside-color=$fg --ring-color=$fg --insidever-color=$verify --ringver-color=$verify --insidewrong-color=$wrong --ringwrong-color=$wrong --line-uses-inside --keyhl-color=$verify --separator-color=$verify --bshl-color=$verify --time-str="%H:%M" --time-size=100 --date-str="%a, %d %b" --date-size=32 --verif-text="Verifying Password..." --wrong-text="Wrong Password!" --noinput-text="" --greeter-text="Type the password to Unlock" --ind-pos="215:435" --time-font="Sofia Pro:style=Bold" --date-font="Sofia Pro" --verif-font="Sofia Pro" --greeter-font="Sofia Pro" --wrong-font="Sofia Pro" --verif-size=16 --greeter-size=16 --wrong-size=16 --time-pos="215:280" --date-pos="215:320" --greeter-pos="215:558" --wrong-pos="215:585" --verif-pos="215:468" --date-color=$date --time-color=$date --greeter-color=$fg --wrong-color=$wrong --verif-color=$verify --verif-pos="215:585" --refresh-rate=0 --pass-media-keys --pass-volume-keys
+slowfade end
